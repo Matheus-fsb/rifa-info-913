@@ -82,6 +82,11 @@ body {
     font-size: 20px;
 }
 
+.number:hover {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
 #pc {
     width: 20%;
     padding: 5px;
@@ -160,8 +165,16 @@ body {
     color: white; /* Texto branco */
 }
 
+.number.buyer-assigned:hover {
+    background-color: #4caf4fc1; /* Cor de fundo verde para números com comprador */
+}
+
 .number.unassigned {
     background-color: #f44336; /* Cor de fundo vermelha para números sem comprador */
     color: white; /* Texto branco */
+}
+
+.number.unassigned:hover {
+    background-color: #f44336c0; /* Cor de fundo vermelha para números sem comprador */
 }
 

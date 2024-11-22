@@ -1,5 +1,6 @@
 const express = require('express');
 const Numbers = require('../models/Numbers');
+const Buyer = require('../models/Buyer')
 
 const router = express.Router();
 
@@ -11,6 +12,30 @@ router.get('/numbers', async (req, res) => {
     res.status(500).json({ error: 'Erro ao buscar os números' });
   }
 });
+
+router.get('/numbers/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const numberData = await Numbers.findByPk(id, {
+      include: {
+        model: Buyer,
+        as: 'buyer', // Inclua o alias correto aqui
+        attributes: ['name', 'telephone'],
+      },
+    });
+
+    if (!numberData) {
+      return res.status(404).json({ message: 'Número não encontrado.' });
+    }
+
+    res.json(numberData);
+  } catch (error) {
+    console.error('Erro ao buscar número:', error.message, error.stack);
+    res.status(500).json({ error: 'Erro ao buscar o número.' });
+  }
+});
+
 
 router.post('/numbers', async (req, res) => {
   try {

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/modal.css">
     <title>Rifa 913A</title>
 </head>
 
@@ -24,41 +25,21 @@
         <img src="../../images/pc.png" alt="pc" id="pc">
     </div>
 
-    <script>
-        const grid = document.getElementById('number-grid');
+    <!-- Modal -->
+    <div id="number-modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <h2 id="modal-text">Informações do número</h2>
+            <p class="lable"><em>Nome do comprador</em></p>
+            <p id="modal-name">Aqui o nome</p>
+            <p class="lable"><em>Telefone / Celular</em></p>
+            <p id="modal-tel">Aqui o tel</p>
+        </div>
+    </div>
 
-        // Função para carregar os números da API
-        async function loadNumbers() {
-            try {
-                const response = await fetch('http://localhost:3000/numbers'); // A URL do seu backend
-                const numbersList = await response.json();
-
-                // Adiciona os números à grid
-                numbersList.forEach(number => {
-                    const numberDiv = document.createElement('div');
-                    numberDiv.classList.add('number');
-                    numberDiv.classList.add(`number-${number.id}`); // Usando o ID do número
-                    numberDiv.id = `number-${number.id}`;
-                    numberDiv.textContent = number.number; // Mostra o número
-
-                    // Verifica se o buyerId é diferente de null e aplica a classe correspondente
-                    if (number.buyerId !== null) {
-                        numberDiv.classList.add('buyer-assigned');
-                    } else {
-                        numberDiv.classList.add('unassigned');
-                    }
-
-                    grid.appendChild(numberDiv);
-                });
-            } catch (error) {
-                console.error('Erro ao carregar os números:', error);
-            }
-        }
-
-        // Carregar os números assim que a página carregar
-        loadNumbers();
-
-    </script>
+    <!-- Scripts -->
+    <script src="../scripts/numbers.js"></script>
+    <script src="../scripts/modal.js"></script>
 </body>
 
 </html>
