@@ -1,6 +1,6 @@
 const express = require('express');
 const Numbers = require('../models/Numbers');
-const Buyer = require('../models/Buyer')
+const Buyer = require('../models/Buyer');
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ router.get('/numbers', async (req, res) => {
     const numbersList = await Numbers.findAll();
     res.json(numbersList);
   } catch (error) {
-    res.status(500).json({ error: 'Erro ao buscar os números' });
+    res.status(500).json({ error: 'Erro ao buscar os números. Tente novamente mais tarde.' });
   }
 });
 
@@ -32,21 +32,20 @@ router.get('/numbers/:id', async (req, res) => {
     res.json(numberData);
   } catch (error) {
     console.error('Erro ao buscar número:', error.message, error.stack);
-    res.status(500).json({ error: 'Erro ao buscar o número.' });
+    res.status(500).json({ error: 'Erro ao buscar o número. Tente novamente mais tarde.' });
   }
 });
-
 
 router.post('/numbers', async (req, res) => {
   try {
     const { number } = req.body;
     if (!number) {
-      return res.status(400).json({ error: 'Número é obrigatório' });
+      return res.status(400).json({ error: 'O campo "número" é obrigatório.' });
     }
     const newNumber = await Numbers.create({ number });
     res.status(201).json(newNumber);
   } catch (error) {
-    res.status(400).json({ error: 'Erro ao criar o número' });
+    res.status(400).json({ error: 'Erro ao criar o número. Verifique os dados enviados.' });
   }
 });
 
@@ -55,14 +54,15 @@ router.put('/numbers/:id', async (req, res) => {
     const { number, buyerId } = req.body;
     const id = req.params.id;
     const numbers = await Numbers.findByPk(id);
-    if (numbers) {
-      await numbers.update({ number, buyerId });
-      res.status(200).json({ message: 'Number updated successfully.' });
-    } else {
-      res.status(404).json({ message: "Number not found." });
+
+    if (!numbers) {
+      return res.status(404).json({ message: 'Número não encontrado.' });
     }
+
+    await numbers.update({ number, buyerId });
+    res.status(200).json({ message: 'Número atualizado com sucesso.' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: 'Erro ao atualizar o número. Tente novamente mais tarde.' });
   }
 });
 
@@ -74,19 +74,19 @@ router.patch('/numbers/:id', async (req, res) => {
     const numbers = await Numbers.findByPk(id);
 
     if (!numbers) {
-      return res.status(404).json({ message: "Number not found." });
+      return res.status(404).json({ message: 'Número não encontrado.' });
     }
 
     if (numbers.buyerId !== null) {
-      return res.status(400).json({ message: "buyerId is already set and cannot be changed." });
+      return res.status(400).json({ message: 'O campo "buyerId" já foi definido e não pode ser alterado.' });
     }
 
     numbers.buyerId = buyerId;
     await numbers.save();
 
-    res.status(200).json({ message: 'buyerId updated successfully.' });
+    res.status(200).json({ message: 'buyerId atualizado com sucesso.' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: 'Erro ao atualizar o buyerId. Tente novamente mais tarde.' });
   }
 });
 
@@ -94,15 +94,16 @@ router.delete('/numbers/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const number = await Numbers.findByPk(id);
+
     if (!number) {
       return res.status(404).json({ message: 'Número não encontrado.' });
     }
+
     await number.destroy();
     res.status(200).json({ message: 'Número deletado com sucesso.' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: 'Erro ao deletar o número. Tente novamente mais tarde.' });
   }
 });
-
 
 module.exports = router;

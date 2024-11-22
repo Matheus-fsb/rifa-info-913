@@ -11,7 +11,6 @@ const Numbers = sequelize.define('Numbers', {
   },
 });
 
-// Relacionamento
 Numbers.belongsTo(Buyer, {
   foreignKey: {
     name: 'buyerId',

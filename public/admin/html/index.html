@@ -6,10 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/modal.css">
+    <link rel="stylesheet" href="../css/form.css">
     <title>Rifa 913A</title>
 </head>
 
 <body>
+    <div class="modal form">
+        <div class="content">
+            <h2>Login do Administrador</h2>
+            <form id="login-form">
+                <label for="username">
+                    <span>Usuário:</span>
+                    <input type="text" id="username" required>
+                </label>
+                <br><br>
+                <label for="password">
+                    <span>Senha:</span>
+                    <input type="password" id="password" required>
+                </label>
+                <br><br>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+
     <div id="central-box" class="central-box">
         <div id="div-logo-top">
             <img src="../../images/913.svg" alt="913A">
@@ -30,9 +50,9 @@
         <div class="modal-content">
             <span id="close-modal" class="close">&times;</span>
             <h2 id="modal-text">Informações do número</h2>
-            <p class="lable-text"><em>Nome</em></p>
+            <p class="lable"><em>Nome do comprador</em></p>
             <p id="modal-name">Aqui o nome</p>
-            <p class="lable-text"><em>Tel</em></p>
+            <p class="lable"><em>Telefone / Celular</em></p>
             <p id="modal-tel">Aqui o tel</p>
         </div>
     </div>
@@ -40,7 +60,7 @@
     <!-- Scripts -->
     <script src="../scripts/numbers.js"></script>
     <script src="../scripts/modal.js"></script>
-    <script src="../../scripts.js"></script>
+    <script src="../scripts/form.js"></script>
 </body>
 
 </html>
