@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 
 const numbersRoutes = require('./routes/numbersRoutes.js');
 const adminRoutes = require('./routes/adminRoutes.js');
@@ -7,6 +8,7 @@ const buyerRoutes = require('./routes/buyerRoutes.js');
 const logRoutes = require('./routes/logRoutes.js');
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -22,10 +24,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/geral/html/index.html'));
 });
 
-// Rota comentada (manter para futura implementação)
-// app.get('/admin', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../public/admin/html/index.html'));
-// });
+// Rota admin
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/admin/html/index.html'));
+});
 
 // Arquivos estáticos
 app.use(express.static(path.join(__dirname, '../public/geral')));

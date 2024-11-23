@@ -20,7 +20,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow-y: scroll;
 }
 
 #central-box {
@@ -177,4 +176,6 @@ body {
 .number.unassigned:hover {
     background-color: #f44336c0; /* Cor de fundo vermelha para números sem comprador */
 }
+
+
 

@@ -12,6 +12,22 @@ router.get('/buyers', async (req, res) => {
   }
 });
 
+router.get('/buyers/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+    const buyer = await Buyer.findOne({ where: { email } });
+    
+    if (!buyer) {
+      return res.status(404).json({ error: 'Comprador não encontrado.' });
+    }
+    
+    res.json(buyer); 
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar o comprador. Tente novamente mais tarde.' });
+  }
+});
+
+
 router.post('/buyers', async (req, res) => {
   const { name, email, telephone } = req.body;
   try {

@@ -3,8 +3,7 @@ const sequelize = require('./config/database');
 
 const PORT = 3000;
 
-// Sincronização do banco de dados e inicialização do servidor
-sequelize.sync({ force: true })
+sequelize.sync({ force: false })
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Servidor iniciado em: http://localhost:${PORT}`);
