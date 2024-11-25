@@ -77,10 +77,6 @@ router.patch('/numbers/:id', async (req, res) => {
       return res.status(404).json({ message: 'Número não encontrado.' });
     }
 
-    if (numbers.buyerId !== null) {
-      return res.status(400).json({ message: 'O campo "buyerId" já foi definido e não pode ser alterado.' });
-    }
-
     numbers.buyerId = buyerId;
     await numbers.save();
 
@@ -89,6 +85,28 @@ router.patch('/numbers/:id', async (req, res) => {
     res.status(500).json({ error: 'Erro ao atualizar o buyerId. Tente novamente mais tarde.' });
   }
 });
+
+router.patch('/numbers-null/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log('ID recebido no backend:', id); // Log para verificar o ID recebido
+
+    const number = await Numbers.findByPk(id);
+
+    if (!number) {
+      return res.status(404).json({ message: 'Número não encontrado.' });
+    }
+
+    number.buyerId = null;
+    await number.save();
+
+    res.status(200).json({ message: 'buyerId atualizado com sucesso.' });
+  } catch (error) {
+    console.error('Erro ao tentar atualizar buyerId:', error);
+    res.status(500).json({ error: 'Erro ao atualizar o buyerId. Tente novamente mais tarde.' });
+  }
+});
+
 
 router.delete('/numbers/:id', async (req, res) => {
   try {

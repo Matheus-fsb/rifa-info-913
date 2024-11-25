@@ -9,10 +9,12 @@ const Buyer = sequelize.define('Buyer', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
   telephone: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
 });
 
