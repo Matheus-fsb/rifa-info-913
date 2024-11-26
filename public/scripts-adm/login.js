@@ -25,12 +25,9 @@ window.onload = function () {
 function logout() {
     // Remover o token do localStorage
     localStorage.removeItem('authToken');
-    
+
     // Exibir o modal de login novamente
     document.getElementById('login-modal').classList.remove('hidden');
-    
-    // Opcional: Redirecionar o usuário para a página de login (se desejar)
-    // window.location.href = '/login';  // Defina a URL para onde deseja redirecionar
 }
 
 // Adicionar o evento de clique no botão de deslogar

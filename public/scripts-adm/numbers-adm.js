@@ -1,3 +1,4 @@
+import { createAuthHeaders } from './createHeader.js';
 const grid = document.getElementById('number-grid');
 
 // Função para carregar os números da API

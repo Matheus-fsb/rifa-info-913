@@ -1,3 +1,5 @@
+import { createAuthHeaders } from './createHeader.js';
+
 async function deleteNumbers(quantity) {
   try {
     // Primeira parte: buscar todos os números no banco
@@ -15,13 +17,13 @@ async function deleteNumbers(quantity) {
     // Limitar a quantidade de números a serem deletados ao número disponível
     const numbersToDelete = Math.min(quantity, maxNumber);
 
+    createAuthHeaders();
+
     // Deletar os números do maior para o menor, até quantity
     for (let i = maxNumber; i > maxNumber - numbersToDelete; i--) {
       const deleteResponse = await fetch(`/numbers/${i}`, {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: createAuthHeaders(),
       });
 
       const data = await deleteResponse.json();
@@ -53,9 +55,7 @@ async function createNumbers(quantity) {
     for (let i = 0; i < numbers.length; i++) {
       const response = await fetch('/numbers', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: createAuthHeaders(),
         body: JSON.stringify(numbers[i]),
       });
 
@@ -74,3 +74,6 @@ async function createNumbers(quantity) {
     alert('Erro ao tentar criar os números. Tente novamente mais tarde.');
   }
 }
+
+window.deleteNumbers = deleteNumbers;
+window.createNumbers = createNumbers;

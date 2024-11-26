@@ -1,3 +1,5 @@
+import { createAuthHeaders } from './createHeader.js';
+
 const computer = document.getElementById('pc');
 
 computer.addEventListener('click', async (event) => {
@@ -8,7 +10,7 @@ computer.addEventListener('click', async (event) => {
         // Envia o log para o endpoint que salva o arquivo
         const saveResponse = await fetch('http://localhost:3000/save-log', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: createAuthHeaders(),
             body: JSON.stringify(log)
         });
 

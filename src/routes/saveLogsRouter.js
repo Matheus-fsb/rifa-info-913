@@ -3,11 +3,12 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const os = require('os'); // Módulo para obter informações do sistema
+const authenticateToken = require('../middware/auth.js')
 
 const router = express.Router();
 
 // Rota para salvar o log no sistema de arquivos
-router.post('/save-log', (req, res) => {
+router.post('/save-log', authenticateToken, (req, res) => {
     const logData = req.body; // Dados recebidos do frontend
 
     // Obtém o caminho para a área de trabalho do usuário

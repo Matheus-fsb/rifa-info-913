@@ -2,11 +2,12 @@
 const Admin = require('../models/Admin');
 const express = require('express');
 const bcrypt = require('bcrypt');
+const authenticateToken = require('../middware/auth.js')
 
 const router = express.Router();
 
 // Rota para listar todos os administradores
-router.get('/admin', async (req, res) => {
+router.get('/admin', authenticateToken, async (req, res) => {
   try {
     const admin = await Admin.findAll();
     res.json(admin); // Retorna todos os administradores
@@ -70,7 +71,7 @@ router.put('/admin/:id', async (req, res) => {
 });
 
 // Rota para deletar um administrador
-router.delete('/admin/:id', async (req, res) => {
+router.delete('/admin/:id', authenticateToken, async (req, res) => {
   try {
     const id = req.params.id;
 

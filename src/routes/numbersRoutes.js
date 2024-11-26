@@ -2,6 +2,7 @@
 const express = require('express');
 const Numbers = require('../models/Numbers');
 const Buyer = require('../models/Buyer');
+const authenticateToken = require('../middware/auth.js')
 
 const router = express.Router();
 
@@ -41,7 +42,7 @@ router.get('/numbers/:id', async (req, res) => {
 });
 
 // Rota para criar um novo número
-router.post('/numbers', async (req, res) => {
+router.post('/numbers', authenticateToken, async (req, res) => {
   try {
     const { number } = req.body;
 
@@ -57,7 +58,7 @@ router.post('/numbers', async (req, res) => {
 });
 
 // Rota para atualizar um número específico
-router.put('/numbers/:id', async (req, res) => {
+router.put('/numbers/:id', authenticateToken, async (req, res) => {
   try {
     const { number, buyerId } = req.body;
     const id = req.params.id;
@@ -76,7 +77,7 @@ router.put('/numbers/:id', async (req, res) => {
 });
 
 // Rota para atualizar apenas o campo buyerId de um número
-router.patch('/numbers/:id', async (req, res) => {
+router.patch('/numbers/:id', authenticateToken, async (req, res) => {
   try {
     const { buyerId } = req.body;
     const id = req.params.id;
@@ -97,7 +98,7 @@ router.patch('/numbers/:id', async (req, res) => {
 });
 
 // Rota para setar o campo buyerId de um número como null
-router.patch('/numbers-null/:id', async (req, res) => {
+router.patch('/numbers-null/:id', authenticateToken, async (req, res) => {
   try {
     const id = req.params.id;
     console.log('ID recebido no backend:', id); // Log para verificar o ID recebido
@@ -119,7 +120,7 @@ router.patch('/numbers-null/:id', async (req, res) => {
 });
 
 // Rota para deletar um número específico
-router.delete('/numbers/:id', async (req, res) => {
+router.delete('/numbers/:id', authenticateToken, async (req, res) => {
   try {
     const id = req.params.id;
     const number = await Numbers.findByPk(id);

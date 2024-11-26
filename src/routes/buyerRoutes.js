@@ -1,11 +1,12 @@
 // Importa o módulo necessário
 const express = require('express');
 const Buyer = require('../models/Buyer');
+const authenticateToken = require('../middware/auth.js')
 
 const router = express.Router();
 
 // Rota para buscar todos os compradores
-router.get('/buyers', async (req, res) => {
+router.get('/buyers', authenticateToken, async (req, res) => {
   try {
     // Busca todos os compradores registrados na base de dados
     const buyers = await Buyer.findAll();
@@ -17,7 +18,7 @@ router.get('/buyers', async (req, res) => {
 });
 
 // Rota para buscar um comprador específico pelo e-mail
-router.get('/buyers/:email', async (req, res) => {
+router.get('/buyers/:email', authenticateToken, async (req, res) => {
   try {
     const { email } = req.params;
     // Busca um comprador pelo e-mail
@@ -36,7 +37,7 @@ router.get('/buyers/:email', async (req, res) => {
 });
 
 // Rota para registrar um novo comprador
-router.post('/buyers', async (req, res) => {
+router.post('/buyers', authenticateToken, async (req, res) => {
   const { name, email, telephone } = req.body;
   try {
     // Cria um novo comprador na base de dados
@@ -53,7 +54,7 @@ router.post('/buyers', async (req, res) => {
 });
 
 // Rota para atualizar os dados de um comprador
-router.put('/buyers/:id', async (req, res) => {
+router.put('/buyers/:id', authenticateToken, async (req, res) => {
   try {
     const id = req.params.id;
     const { name, email, telephone } = req.body;
@@ -78,7 +79,7 @@ router.put('/buyers/:id', async (req, res) => {
 });
 
 // Rota para remover um comprador
-router.delete('/buyers/:id', async (req, res) => {
+router.delete('/buyers/:id', authenticateToken, async (req, res) => {
   try {
     const id = req.params.id;
     // Busca o comprador pelo ID

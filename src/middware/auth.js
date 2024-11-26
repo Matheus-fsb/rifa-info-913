@@ -1,11 +1,14 @@
 const jwt = require('jsonwebtoken');
 
 const authenticateToken = (req, res, next) => {
-  const token = req.headers['authorization'];
+  const authHeader = req.headers['authorization'];
 
-  if (!token) {
+  if (!authHeader) {
     return res.status(401).json({ error: 'Token not provided.' });
   }
+
+  // Remove o prefixo "Bearer " caso exista
+  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader;
 
   jwt.verify(token, process.env.JWT_TOKEN, (err, user) => {
     if (err) {

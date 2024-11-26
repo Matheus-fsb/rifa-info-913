@@ -1,3 +1,4 @@
+import { createAuthHeaders } from './createHeader.js';
 // Elementos principais
 const numberGridArray = document.getElementById('number-grid');
 const modal_escolha = document.getElementById('modal-escolha');
@@ -89,7 +90,7 @@ function showNewRegistrationModal(event, numberId, isAlteration = false) {
         try {
             const response = await fetch('/buyers', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: createAuthHeaders(),
                 body: JSON.stringify(formData),
             });
 
@@ -98,7 +99,7 @@ function showNewRegistrationModal(event, numberId, isAlteration = false) {
                 const buyerId = data.buyer.id;
                 const updateResponse = await fetch(`/numbers/${numberId}`, {
                     method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: createAuthHeaders(),
                     body: JSON.stringify({ buyerId }),
                 });
 
@@ -141,7 +142,7 @@ function showExistingRegistrationModal(event, numberId) {
         try {
             const response = await fetch(`/buyers/${formData.email}`, {
                 method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
+                headers: createAuthHeaders(),
             });
 
             const buyerData = await response.json();
@@ -151,7 +152,7 @@ function showExistingRegistrationModal(event, numberId) {
 
                 const updateResponse = await fetch(`/numbers/${numberId}`, {
                     method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: createAuthHeaders(),
                     body: JSON.stringify({ buyerId }),
                 });
 
@@ -214,7 +215,7 @@ deleteBuyerButton.addEventListener('click', async (event) => {
         try {
             const response = await fetch(`http://localhost:3000/numbers-null/${numberId}`, {
                 method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
+                headers: createAuthHeaders(),
             });
 
             const data = await response.json();

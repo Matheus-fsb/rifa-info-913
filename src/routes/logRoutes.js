@@ -2,11 +2,12 @@
 const express = require('express');
 const Numbers = require('../models/Numbers');
 const Buyer = require('../models/Buyer');
+const authenticateToken = require('../middware/auth.js')
 
 const router = express.Router();
 
 // Rota para gerar um relatório de números e seus compradores
-router.get('/log', async (req, res) => {
+router.get('/log', authenticateToken, async (req, res) => {
   try {
     // Busca todos os números, incluindo informações do comprador (se houver)
     const numbers = await Numbers.findAll({
