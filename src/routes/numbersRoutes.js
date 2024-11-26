@@ -1,18 +1,22 @@
+// Importa os módulos necessários
 const express = require('express');
 const Numbers = require('../models/Numbers');
 const Buyer = require('../models/Buyer');
 
 const router = express.Router();
 
+// Rota para buscar todos os números
 router.get('/numbers', async (req, res) => {
   try {
     const numbersList = await Numbers.findAll();
     res.json(numbersList);
   } catch (error) {
+    // Caso ocorra um erro ao buscar os números
     res.status(500).json({ error: 'Erro ao buscar os números. Tente novamente mais tarde.' });
   }
 });
 
+// Rota para buscar um número específico, incluindo os dados do comprador
 router.get('/numbers/:id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -20,7 +24,7 @@ router.get('/numbers/:id', async (req, res) => {
     const numberData = await Numbers.findByPk(id, {
       include: {
         model: Buyer,
-        as: 'buyer', // Inclua o alias correto aqui
+        as: 'buyer', // Inclui o alias correto aqui
         attributes: ['name', 'telephone'],
       },
     });
@@ -36,23 +40,28 @@ router.get('/numbers/:id', async (req, res) => {
   }
 });
 
+// Rota para criar um novo número
 router.post('/numbers', async (req, res) => {
   try {
     const { number } = req.body;
+
     if (!number) {
       return res.status(400).json({ error: 'O campo "número" é obrigatório.' });
     }
+
     const newNumber = await Numbers.create({ number });
-    res.status(201).json(newNumber);
+    res.status(201).json(newNumber); // Retorna o número criado com sucesso
   } catch (error) {
     res.status(400).json({ error: 'Erro ao criar o número. Verifique os dados enviados.' });
   }
 });
 
+// Rota para atualizar um número específico
 router.put('/numbers/:id', async (req, res) => {
   try {
     const { number, buyerId } = req.body;
     const id = req.params.id;
+
     const numbers = await Numbers.findByPk(id);
 
     if (!numbers) {
@@ -66,6 +75,7 @@ router.put('/numbers/:id', async (req, res) => {
   }
 });
 
+// Rota para atualizar apenas o campo buyerId de um número
 router.patch('/numbers/:id', async (req, res) => {
   try {
     const { buyerId } = req.body;
@@ -86,6 +96,7 @@ router.patch('/numbers/:id', async (req, res) => {
   }
 });
 
+// Rota para setar o campo buyerId de um número como null
 router.patch('/numbers-null/:id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -107,7 +118,7 @@ router.patch('/numbers-null/:id', async (req, res) => {
   }
 });
 
-
+// Rota para deletar um número específico
 router.delete('/numbers/:id', async (req, res) => {
   try {
     const id = req.params.id;

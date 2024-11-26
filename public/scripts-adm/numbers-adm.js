@@ -4,6 +4,9 @@ const grid = document.getElementById('number-grid');
 async function loadNumbers() {
     try {
         const response = await fetch('http://localhost:3000/numbers'); // A URL do seu backend
+        if (!response.ok) {
+            throw new Error('Falha ao carregar os números');
+        }
         const numbersList = await response.json();
 
         // Ordena os números pelo atributo 'number'
@@ -31,6 +34,8 @@ async function loadNumbers() {
         });
     } catch (error) {
         console.error('Erro ao carregar os números:', error);
+        // Exibir uma mensagem amigável ao usuário
+        grid.innerHTML = '<p>Erro ao carregar os números. Tente novamente mais tarde.</p>';
     }
 }
 

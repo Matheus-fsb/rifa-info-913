@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/modal-adm.css">
-    <title>Rifa 913A</title>
+    <link rel="icon" href="../images/favicon.png" type="image/x-icon">
+    <title>Rifa 913A - Adm</title>
 </head>
 
 <body>
@@ -16,6 +17,7 @@
         </div>
         <div id="div-title">
             <h1>Rifa Solidária n°1</h1>
+            <button id="deslogar">Deslogar</button>
         </div>
         <div id="number-grid" class="dynamic-grid">
             <!-- Grid de números -->
@@ -23,17 +25,18 @@
         <img src="../images/pc.png" alt="pc" id="pc">
     </div>
 
-    <!-- Modal -->
-    <!-- <div id="number-modal" class="modal hidden">
+    <div id="login-modal" class="modal hidden">
         <div class="modal-content">
-            <span id="close-modal" class="close">&times;</span>
-            <h2 id="modal-text">Informações do número</h2>
-            <p class="lable-text"><em>Nome</em></p>
-            <p id="modal-name">Aqui o nome</p>
-            <p class="lable-text"><em>Tel</em></p>
-            <p id="modal-tel">Aqui o tel</p>
+            <h2>Login</h2>
+            <form id="login-form" action="#" method="POST">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Entrar</button>
+            </form>
         </div>
-    </div> -->
+    </div>
 
     <!-- Modal de escolha-->
     <div class="modal hidden" id="number-modal">
@@ -85,6 +88,7 @@
     <script type="module" src="../scripts-adm/modal-adm.js"></script>
     <script src="../commands.js"></script>
     <script src="../scripts-adm/log.js"></script>
+    <script src="../scripts-adm/login.js"></script>
 </body>
 
 </html>
