@@ -2,7 +2,7 @@
 const app = require('./app');
 const sequelize = require('./config/database');
 
-const port = process.env.PORT
+const port = process.env.PORT || 3000;
 
 // Sincroniza o banco de dados com a aplicação
 sequelize.sync({ force: false })
