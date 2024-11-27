@@ -2,14 +2,14 @@
 const app = require('./app');
 const sequelize = require('./config/database');
 
-const port = process.env.PORT || 3000
+const PORT = 3000;
 
 // Sincroniza o banco de dados com a aplicação
 sequelize.sync({ force: false })
   .then(() => {
     // Inicia o servidor quando o banco de dados for sincronizado com sucesso
     app.listen(PORT, () => {
-      console.log(`Servidor iniciado na porta:${port}`);
+      console.log(`Servidor iniciado em: ${PORT}`);
       console.log('Banco de dados sincronizado com sucesso.');
     });
   })
